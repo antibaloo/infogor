@@ -8,9 +8,8 @@ if(empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off"){
 }
 
 require_once(str_replace('\\\\','/',dirname(__FILE__)).'/configuration.php');
-
-mysqli_connect($GLOBALS['config']['bd_hostname'], $GLOBALS['config']['bd_username'], $GLOBALS['config']['bd_password']) or die("Не могу подключиться к БД!");
-mysqli_select_db($GLOBALS['config']['bd_basename']) or die("БД отсутствует!");
-mysqli_set_charset('utf8mb4');
+mysql_connect($GLOBALS['config']['bd_hostname'], $GLOBALS['config']['bd_username'], $GLOBALS['config']['bd_password']) or die('Could not connect: ' . mysql_error());
+mysql_select_db($GLOBALS['config']['bd_basename']) or die("БД отсутствует!");
+mysql_set_charset('utf8mb4');
 
 ?>
