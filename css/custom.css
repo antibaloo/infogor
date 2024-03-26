@@ -1,0 +1,313 @@
+	
+	html {
+		font-size: 14px;
+	}
+	
+	.f-0 {line-height: auto; font-size: 0 !important;}
+	
+	
+	.btn {
+		padding: 5px 12px;
+		border-radius: 0;
+		line-height: normal;
+		transition: all 0.3s ease-in-out;
+	}
+	
+	.btn-primary {
+		background: #f39100;
+		color: #fff;
+	}
+	
+	.btn-primary:hover {
+		background: #c07300;
+		color: white;
+		text-decoration: none;
+	}
+	
+	.btn-place-cd {
+		display: flex;
+		justify-content: center;
+		background: #f39100;
+		color: white;
+		border-radius: initial;
+		font-family: "Roboto Condensed", sans-serif;
+		padding: 6px 15px;
+		font-size: 14px;
+		border: 1px solid rgba(0, 0, 0, 0.18);
+		transition: all 0.3s ease-in-out;
+		text-transform: uppercase;
+	}
+	.btn-place-cd:hover {
+		background: #c07300;
+	}
+	.btn-place-dd {
+		display: flex;
+		justify-content: center;
+		background: #cc0000;
+		color: white;
+		border-radius: initial;
+		font-family: "Roboto Condensed", sans-serif;
+		padding: 6px 15px;
+		font-size: 14px;
+		border: 1px solid rgba(0, 0, 0, 0.18);
+		transition: all 0.3s ease-in-out;
+		text-transform: uppercase;
+	}
+	.btn-place-dd:hover {
+		background: #990000;
+	}
+	.modal {
+		border-radius: 0px;
+		--bs-modal-border-radius: 0px;
+	}
+	
+	a {
+		color: #f39100;
+	}
+	
+	a:hover {
+		text-decoration: none;
+		color: #dd8400;
+	}
+	
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+color: #cccccc !important;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color: #cccccc !important;
+   opacity: 1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color: #cccccc !important;
+   opacity: 1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: #cccccc !important;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+   color: #cccccc !important;
+}
+::placeholder { /* Most modern browsers support this now. */
+   color: #cccccc !important;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+select:focus,
+.form-select:focus,
+.uneditable-input:focus {
+  border-color: #f39100;
+  box-shadow: 0px 0px 9px -3px #f39100,0px 0px 7px -3px #f39100;
+  outline: 0 none;
+  border-radius: 0;
+}
+
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input,
+.form-control, .form-select {
+  border-radius: 0 !important;
+  border: 1px solid #9d9d9d;
+}
+	
+	.modal-footer {
+		border-top: 0;
+	}
+	
+	.error {
+		border: 1px solid #dc3545 !important;
+	}
+	
+	.error-message {
+		display: none;
+	}
+	a.hero-slide {
+		text-decoration: none;
+	}
+
+a.news-a {text-decoration: none !important; color: #000;}
+a.news-a:hover {text-decoration: none !important; color: #000;}
+
+a h5.news-header {color: #f39100; text-decoration: none;}
+a p.news-preview {color: #000; text-decoration: none;}
+a div.news-more {color: #000; text-decoration: none;}
+
+a:hover h5.news-header {color: #f39100; text-decoration: underline;}
+a:hover p.news-preview {color: #000; text-decoration: underline;}
+a:hover div.news-more {color: #000; text-decoration: underline;}
+	
+.cat .subcat .accordion-header a span {
+  color: #f39100;
+}	
+
+.cat .subcat .accordion-header a {
+  text-decoration: none;
+}
+.cat .subcat .accordion-header a:hover {
+  text-decoration: underline;
+}
+
+.page-link {
+	border-radius: 0 !important;
+	color: #000;
+}
+
+.page-link:hover {
+	color: #f39100;
+}
+
+.active>.page-link {
+	background-color: #f39100;
+	color: #fff;
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.text-primary {
+	color: #f39100 !important;
+}
+	
+
+/*! Image Uploader - v1.0.0 - 15/07/2019
+ * Copyright (c) 2019 Christian Bayer; Licensed MIT */
+
+.image-uploader{min-height:10rem;border:1px solid #d9d9d9;position:relative}
+.image-uploader .drag-over{background-color:#f3f3f3}
+.image-uploader input[type="file"]{width:0;height:0;position:absolute;z-index:-1;opacity:0}
+.image-uploader .upload-text{position:absolute;top:0;right:0;left:0;bottom:0;display:flex;justify-content:center;align-items:center;flex-direction:column}
+.image-uploader .upload-text i{display:block;font-size:3rem;margin-bottom:.5rem}
+.image-uploader .upload-text span{display:block}
+.image-uploader.has-files .upload-text{display:none}
+.image-uploader .uploaded{padding:.5rem;line-height:0}
+.image-uploader .uploaded .uploaded-image{display:inline-block;width:calc(24% - 1rem);padding-bottom:calc(24% - 1rem);height:0;position:relative;margin:.5rem;background:#f3f3f3;cursor:default}
+.image-uploader .uploaded .uploaded-image img{width:100%;height:100%;object-fit:cover;position:absolute}
+.image-uploader .uploaded .uploaded-image .delete-image{display:none;cursor:pointer;position:absolute;top:.2rem;right:.2rem;border-radius:50%;padding:.3rem;background-color:rgba(0,0,0,.5);-webkit-appearance:none;border:none}
+.image-uploader .uploaded .uploaded-image:hover .delete-image{display:block}
+.image-uploader .uploaded .uploaded-image .delete-image i{color:#fff;font-size:1.4rem}
+	
+	
+.modal-header .closeto {
+  padding: 1rem 1rem;
+  margin: -1rem -1rem -1rem auto;
+}
+
+button.closeto {
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.closeto {
+  float: right;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: .5;
+}
+
+.dropdown-item:active {
+  background-color: #fff;
+  color: #000;
+}
+
+.kd-sm {
+	max-width: 102px;
+}
+
+a div div.kd-list-phone div {
+	text-decoration: none;
+	color: #f39100;
+}
+
+a:hover div div.kd-list-phone div {
+	text-decoration: underline;
+	color: #f39100;
+}
+
+button.close {
+  background-color: transparent;
+  border: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.close-sm {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: .75rem 1.25rem;
+	color: inherit; 
+	background: transparent; 
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+#filter_mobile {
+	cursor: pointer;
+}
+	
+#filter_mobile span {
+	border-bottom: dashed 1px;
+}
+
+.annerspan {
+	bottom:0;
+	right:0;
+	background:rgb(255,255,255);
+	color:#555;
+	opacity:.7;
+	font-size: 10px;
+}
+
+
+.row-flex, .row-flex > div[class*='col-'] 
+{  
+	display: -webkit-box; 
+	display: -moz-box; 
+	display: -ms-flexbox; 
+	display: -webkit-flex; 
+	display: flex; 
+	flex:1 1 auto; 
+}
+
+.row-flex-wrap 
+{    
+	-webkit-flex-flow: row wrap;
+	align-content: flex-start; 
+	flex:0; 
+}
+
+.row-flex > div[class*='col-'] 
+{  
+	margin:-.2px; 
+} 
