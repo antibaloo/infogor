@@ -951,7 +951,7 @@ if (mb_strlen($_FILES['input-file-cn']['tmp_name'])>0) {
 	}
 }
 
-mysqlq("INSERT INTO `".sql($GLOBALS['config']['bd_prefix'])."slides` (
+$k_result = mysqlq("INSERT INTO `".sql($GLOBALS['config']['bd_prefix'])."slides` (
 `name`, 
 `html`, 
 `link`, 
@@ -987,8 +987,12 @@ mysqlq("INSERT INTO `".sql($GLOBALS['config']['bd_prefix'])."slides` (
 '".sql($GLOBALS['user']['ip'])."')");
 
 
-alert("Слайд добавлен!", "Слайд успешно добавлен", "check", "success");
-red("?mod=slides_list");
+if (!$k_result) {
+  alert("Ошибка загрузки!", mysql_error(),"times","danger");
+}else{
+  alert("Слайд добавлен!", "Слайд успешно добавлен", "check", "success");
+  red("?mod=slides_list");
+}
 
 }
 
