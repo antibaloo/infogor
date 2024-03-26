@@ -149,6 +149,8 @@ input[type="color"],
 	}
 	a.hero-slide {
 		text-decoration: none;
+    margin-left:  2px;
+		margin-right: 2px;
 	}
 
 a.news-a {text-decoration: none !important; color: #000;}
