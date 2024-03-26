@@ -1143,7 +1143,7 @@ footer .footer-menu ul li a:hover {
 .slider-nav {
   position: absolute;
   height: 0px;
-  width: 50%;
+  width: 50%; /*Это и есть исправления*/
   max-width: 1148px;
   margin: 0 auto;
   left: 50%;
