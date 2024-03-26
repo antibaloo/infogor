@@ -1,6 +1,8 @@
 $(".hero-slides").slick({
   arrows: true,
-  infinite: false,
+  infinite: true,
+  centerMode: true,
+  centerPadding: "20%",
   prevArrow: "<img src='/img/slide-arrow-left.png' class='slick-prev' alt=''>",
   nextArrow: "<img src='/img/slide-arrow-right.png' class='slick-next' alt=''>",
   appendArrows: $(".hero .slider-nav"),
