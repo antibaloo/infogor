@@ -2040,12 +2040,13 @@ if ($mod=="catalog") {
         </div>
       </nav>
     </header>
-<?php if ($mod!="") { ?>
-    <section class="hero-inner">
-      <div><img src="/img/inner-hero.png" alt="" /></div>
-    </section>
-<?php } else { ?>
-    <section class="hero">
+    
+    <!-- Слайд-шоу или заглушка -->
+<?php
+    $pagesWithSlideer = array(3,9,10,11,12,13,14,42);
+    
+    if ($mod == "" || in_array($page['id'],$pagesWithSlideer)) { ?>
+     <section class="hero">
       <div class="hero-slides">
 		<?php 
 		$query="SELECT * FROM `".sql($GLOBALS['config']['bd_prefix'])."slides` WHERE `status`='1' ORDER BY `position`, `id`;";
@@ -2066,8 +2067,18 @@ if ($mod=="catalog") {
 		<?php } ?>
       </div>
       <div class="slider-nav"></div>
+    </section>   
+    
+   
+    
+    
+<?php } else { ?>
+<section class="hero-inner">
+      <div><img src="/img/inner-hero.png" alt="" /></div>
     </section>
 <?php } ?>
+    
+    <!-- -->
     <div class="d-lg-none d-block mt-3 mb-0">
 	<form action="<?php echo l("catalog", 0, $GLOBALS['user']['lang']); ?>" method="get"><input type="hidden" name="type" value="p">
       <div class="container">
