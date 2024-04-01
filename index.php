@@ -2404,118 +2404,6 @@ $out2.="</a>";
 	
 	<section class="kd-list px-3 px-md-0">
       <div class="container">
-	  
-	  
-	<?php // -- Banners block start
-	
-	
-	$array1=itemsdown_t(3, "p");
-	$array2=itemsdown_t(3, "s");
-	
-	$array=array_merge($array1, $array2);
-	$array=array_unique($array);
-	
-	$array3=itemsdown_t(4, "p");
-	$array4=itemsdown_t(4, "s");
-	
-	$array5=array_merge($array3, $array4);
-	$array5=array_unique($array5);
-
-
-	$rand=rand(0, 10000);
-
-	if (in_array($page['type'], array("p", "s")) and in_array($page['id'], $array)) {
-		
-		if ($rand>5000) {
-		
-		$erid="2VtzqwdfKzs";
-		$einn="91340521575736537F";
-		$ename="ANHUI LONGSHEN NEW MATERIAL CO., LTD";
-	?>
-		<div class="mb-4">
-			<div class="d-none d-md-block">
-				<a href="http://lsgrindingmedia.com/?erid=<?php echo d($erid); ?>" target="_blank" rel="nofollow" class="d-block position-relative">
-					<img src="/upload/anners/banner1110-1.png" class="img-responsive">
-					<span class="position-absolute px-1 py-0 annerspan">Реклама. «<?php echo d($ename); ?>». <?php echo d($einn); ?></span>
-				</a>
-			</div>
-			<div class="d-block d-md-none">
-				<a href="http://lsgrindingmedia.com/?erid=<?php echo d($erid); ?>" target="_blank" rel="nofollow" class="d-block position-relative">
-					<img src="/upload/anners/banner1110-2.png" class="img-responsive">
-					<span class="position-absolute px-1 py-0 annerspan">Реклама. «<?php echo d($ename); ?>». <?php echo d($einn); ?></span></a>
-			</div>
-		</div>
-	<?php }else{
-		
-			if ($page['id']==11) { $rand=2600; }elseif($page['id']==14) { $rand=2400; }
-			if ($rand>2500) {
-				
-			$erid="2VtzqwwWYGk";
-			$einn="ИНН 7813657589";
-			$ename="ООО «Лимин Руссланд»";
-		?>
-			<div class="mb-4">
-				<div class="d-none d-md-block">
-					<a href="https://limingco.ru/melnichnoe-oborudovanie?utm_source=infogor&utm_medium=special_baner&utm_campaign=melnichnoe_oborudovanie&utm_content=liming&erid=<?php echo d($erid); ?>" target="_blank" rel="nofollow" class="d-block position-relative">
-						<img src="/upload/anners/1111-1<?php echo langpx(); ?>.jpg" class="img-responsive">
-						<span class="position-absolute px-1 py-0 annerspan">Реклама. «<?php echo d($ename); ?>». <?php echo d($einn); ?></span>
-					</a>
-				</div>
-				<div class="d-block d-md-none">
-					<a href="https://limingco.ru/melnichnoe-oborudovanie?utm_source=infogor&utm_medium=special_baner&utm_campaign=melnichnoe_oborudovanie&utm_content=liming&erid=<?php echo d($erid); ?>" target="_blank" rel="nofollow" class="d-block position-relative">
-						<img src="/upload/anners/1111-2<?php echo langpx(); ?>.jpg" class="img-responsive">
-						<span class="position-absolute px-1 py-0 annerspan">Реклама. «<?php echo d($ename); ?>». <?php echo d($einn); ?></span></a>
-				</div>
-			</div>
-		<?php	
-			}else{
-				
-			$erid="2VtzqwwWYGk";
-			$einn="ИНН 7813657589";
-			$ename="ООО «Лимин Руссланд»";
-		?>
-			<div class="mb-4">
-				<div class="d-none d-md-block">
-					<a href="https://limingco.ru/melnichnoe-oborudovanie?utm_source=infogor&utm_medium=special_baner&utm_campaign=melnichnoe_oborudovanie&utm_content=liming&erid=<?php echo d($erid); ?>" target="_blank" rel="nofollow" class="d-block position-relative">
-						<img src="/upload/anners/1112-1<?php echo langpx(); ?>.jpg" class="img-responsive">
-						<span class="position-absolute px-1 py-0 annerspan">Реклама. «<?php echo d($ename); ?>». <?php echo d($einn); ?></span>
-					</a>
-				</div>
-				<div class="d-block d-md-none">
-					<a href="https://limingco.ru/melnichnoe-oborudovanie?utm_source=infogor&utm_medium=special_baner&utm_campaign=melnichnoe_oborudovanie&utm_content=liming&erid=<?php echo d($erid); ?>" target="_blank" rel="nofollow" class="d-block position-relative">
-						<img src="/upload/anners/1112-2<?php echo langpx(); ?>.jpg" class="img-responsive">
-						<span class="position-absolute px-1 py-0 annerspan">Реклама. «<?php echo d($ename); ?>». <?php echo d($einn); ?></span></a>
-				</div>
-			</div>
-		<?php		
-			}
-	}
-	
-	}elseif (in_array($page['type'], array("p", "s")) and in_array($page['id'], $array5)) {
-		
-			$erid="2VtzqwwWYGk";
-			$einn="ИНН 7813657589";
-			$ename="ООО «Лимин Руссланд»";
-		?>
-			<div class="mb-4">
-				<div class="d-none d-md-block">
-					<a href="https://limingco.ru/melnichnoe-oborudovanie?utm_source=infogor&utm_medium=special_baner&utm_campaign=melnichnoe_oborudovanie&utm_content=liming&erid=<?php echo d($erid); ?>" target="_blank" rel="nofollow" class="d-block position-relative">
-						<img src="/upload/anners/1112-1<?php echo langpx(); ?>.jpg" class="img-responsive">
-						<span class="position-absolute px-1 py-0 annerspan">Реклама. «<?php echo d($ename); ?>». <?php echo d($einn); ?></span>
-					</a>
-				</div>
-				<div class="d-block d-md-none">
-					<a href="https://limingco.ru/melnichnoe-oborudovanie?utm_source=infogor&utm_medium=special_baner&utm_campaign=melnichnoe_oborudovanie&utm_content=liming&erid=<?php echo d($erid); ?>" target="_blank" rel="nofollow" class="d-block position-relative">
-						<img src="/upload/anners/1112-2<?php echo langpx(); ?>.jpg" class="img-responsive">
-						<span class="position-absolute px-1 py-0 annerspan">Реклама. «<?php echo d($ename); ?>». <?php echo d($einn); ?></span></a>
-				</div>
-			</div>
-		<?php	
-	}
-	
-	// -- Banners block end
-	?>
-	  
         <h1 class="title-inner">
           <?php echo d($page['name'.langpx()]); ?>
         </h1>
@@ -2523,7 +2411,7 @@ $out2.="</a>";
 
 
 		
-	$query="SELECT * FROM `".sql($GLOBALS['config']['bd_prefix'])."catalog` WHERE `parent`='".sql($page['id'])."' and `status_".sql($page['type'])."`='1';";
+	$query="SELECT * FROM `".sql($GLOBALS['config']['bd_prefix'])."catalog` WHERE `parent`='".sql($page['id'])."' and `status_".sql($page['type'])."`='1' ORDER BY position;";
 	$str = mysqlq($query);
 	$arsql=mysql_fetch_assoc($str);
 	$numrows=mysql_num_rows($str);
@@ -2879,7 +2767,6 @@ $out2.="</a>";
 
 
 	$query="SELECT *, md5(concat(name,name_en,name_cn,region)) as md FROM `".sql($GLOBALS['config']['bd_prefix'])."items` WHERE `type`='".sql($page['type'])."' and `catalog` IN ('".implode("' ,'", $array)."')".$searchsql." and `status`='1' GROUP BY md ORDER BY `stamp` DESC  LIMIT ".$start.", ".$quoten.";";
-	
 	$str = mysqlq($query);
 	$arsql=mysql_fetch_assoc($str);
 	$numrows=mysql_num_rows($str);
