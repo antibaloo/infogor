@@ -902,13 +902,16 @@ if ($sce=="slides_add") {
 	
 	
 if (in_array($_POST['input-status'], array("1", "3"))) { $status=$_POST['input-status']; } else { $status=1; }
-
+//Проверяем значение места размещения баннера
+if (in_array($_POST['input-target'], array("m","e","s"))) { $target = $_POST['input-target'];} else {$target = "m";}
+  
 	$query="SELECT max(position) as maxp, min(position) as minp FROM `".sql($GLOBALS['config']['bd_prefix'])."slides`;";
 	$str = mysqlq($query);
 	$arsql=mysql_fetch_assoc($str);
 	$maxp=$arsql['maxp'];
 	$minp=$arsql['minp'];
-	
+
+  
 if ($_POST['input-position']==1) { $position=$minp-1; } else { $position=$maxp+1; }
 
 
@@ -967,7 +970,8 @@ $k_result = mysqlq("INSERT INTO `".sql($GLOBALS['config']['bd_prefix'])."slides`
 `link_cn`, 
 `file_cn`, 
 `user`,
-`ip`
+`ip`,
+`target`
 ) VALUES (
 '".sql($name)."', 
 '".sql($html)."', 
@@ -984,7 +988,8 @@ $k_result = mysqlq("INSERT INTO `".sql($GLOBALS['config']['bd_prefix'])."slides`
 '".sql($link_cn)."', 
 '".sql($file_cn)."', 
 '".sql($GLOBALS['user']['id'])."',
-'".sql($GLOBALS['user']['ip'])."')");
+'".sql($GLOBALS['user']['ip'])."',
+'".sql($target)."')");
 
 
 if (!$k_result) {
@@ -1013,7 +1018,9 @@ red("?mod=slides_list");
 }
 	
 if (in_array($_POST['input-status'], array("1", "3"))) { $status=$_POST['input-status']; } else { $status=$page['status']; }
-
+//Проверяем значение места размещения баннера
+if (in_array($_POST['input-target'], array("m","e","s"))) { $target = $_POST['input-target'];} else {$target = $page['target'];}
+  
 if (mb_strlen($_POST['input-name'])==0) { $name=""; } else { $name=$_POST['input-name']; }
 if (mb_strlen($_POST['input-html'])==0) { $html=""; } else { $html=$_POST['input-html']; }
 if (mb_strlen($_POST['input-link'])==0) { $link=""; } else { $link=$_POST['input-link']; }
@@ -1101,7 +1108,8 @@ mysqlq("UPDATE `".sql($GLOBALS['config']['bd_prefix'])."slides` SET
 `html`='".sql($html)."', 
 `link`='".sql($link)."', 
 `file`='".sql($file)."', 
-`status`='".sql($status)."', 
+`status`='".sql($status)."',
+`target`='".sql($target)."', 
 `name_en`='".sql($name_en)."', 
 `html_en`='".sql($html_en)."', 
 `link_en`='".sql($link_en)."', 
@@ -1894,7 +1902,7 @@ mysqlq("INSERT INTO `".sql($GLOBALS['config']['bd_prefix'])."items`
 `stamp`,
 `key`
 ) VALUES (
-'".sql($user)."',
+'".sql($GLOBALS['user']['id'])."',
 '".sql($type)."',
 '".sql($catalog)."',
 '".sql($region)."',
@@ -1932,8 +1940,9 @@ mysqlq("INSERT INTO `".sql($GLOBALS['config']['bd_prefix'])."items`
 '".sql($GLOBALS['user']['ip'])."',
 '".sql(time())."',
 '".sql($key)."')");
-
-if ($status=="1") {
+  
+  $error = mysql_error();
+  if ($status=="1") {
 	if ($stamp>(time()-86400)) {
 	countadd($catalog, $type, 0, 1);
 	}else{
@@ -1954,7 +1963,8 @@ $total=0;
 				$fl=upload($file, "items");
 				if (mb_strlen($fl)>4) {
 					mysqlq("INSERT INTO `".sql($GLOBALS['config']['bd_prefix'])."items_files` (`type`, `item`, `file`, `position`) VALUES ('image', '".sql($newid)."', '".sql($fl)."', '".sql($total)."')");
-					$total++;
+           $error = mysql_error();
+          $total++;
 				}else{
 					// Не все фотографии загрузились
 				}
@@ -1970,7 +1980,7 @@ $total=0;
 
 
 
-alert("Объявление добавлено!", "Объявление успешно добавлено", "check", "success");
+alert("Объявление добавлено!", "Объявление успешно добавлено".$error, "check", "success");
 red("?mod=items_list&id=".$catalog);
 	
 }
@@ -5521,6 +5531,7 @@ red("?mod=partners_list");
                               <th class="c-table__cell c-table__cell--head p-2 w-100" style="max-width: 75% !important;">Контент</th>
                               <th class="c-table__cell c-table__cell--head p-1 d-none d-md-table-cell text-center mwp-70">Позиция</th>
 							  <th class="c-table__cell c-table__cell--head p-1 d-none d-md-table-cell text-center">Пользователь</th>
+                               <th class="c-table__cell c-table__cell--head p-1 d-none d-md-table-cell text-center">Место размещения</th>
                               <th class="c-table__cell c-table__cell--head p-1 d-md-table-cell text-center">Статус</th>
 							  <th class="c-table__cell c-table__cell--head p-0 text-center" style="max-width: 15% !important;">&nbsp;</th>
                             </tr>
@@ -5529,7 +5540,7 @@ red("?mod=partners_list");
                         <tbody>
 						
 						<?php
-						
+						$targets = array("m" => "Главная", "e" => "Оборудование", "s" => "Заглушка");
 						$maxid=0;
 						$query="SELECT * FROM `".sql($GLOBALS['config']['bd_prefix'])."slides` WHERE `id`>0 ORDER BY `position`, `id` DESC;";
 						$str = mysqlq($query);
@@ -5578,7 +5589,7 @@ red("?mod=partners_list");
 								<td class="c-table__cell d-none d-md-table-cell p-1 align-top text-center">
 									<?php echo $upost; ?>
                                 </td>
-
+                <td class="c-table__cell d-none d-md-table-cell p-1 align-top text-center"><?php echo $targets[$arsql['target']]?></td>
                                 <td class="c-table__cell p-0 pt-2 pb-2 text-center align-top">
 									<?php if ($arsql['status']=="1") { 
 										echo "<button id=\"statusslides".d($arsql['id'])."\" data-id=\"".d($arsql['id'])."\" class=\"btn btn-sm btn-success changestatusslides\"><i class=\"fa fa-check\"></i></button>";
@@ -6652,6 +6663,17 @@ red("?mod=partners_list");
 												</select>
 											</div>
 										</div>
+                  <!-- Добавлено поле "место размещения" баннера -->
+                    <div class="form-group row ml-0 mr-0">
+											<label class="col-form-label-sm col-sm-12 mb-0" for="input-targer">Место размещения</label>
+											<div class="col-sm-12">
+												<select id="input-target" name="input-target" class="form-control form-control-sm">
+													<option value="m" SELECTED>Главная</option>
+													<option value="e">Оборудование</option>
+                          <option value="s">Заглушка</option>
+												</select>
+											</div>
+										</div>
 									</div>
 									<div class="tab-pane fade" id="tab_ru">
 										<div class="form-group row ml-0 mr-0">
@@ -6768,6 +6790,7 @@ red("?mod=partners_list");
 								</ul>
 								<div class="tab-content">
 									<div class="tab-pane fade show active" id="tab">
+                    
 										<div class="form-group row ml-0 mr-0">
 											<label class="col-form-label-sm col-sm-12 mb-0" for="input-type">Статус</label>
 											<div class="col-sm-12">
@@ -6777,6 +6800,18 @@ red("?mod=partners_list");
 												</select>
 											</div>
 										</div>
+                    <!-- Добавлено поле "место размещения" баннера -->
+                    <div class="form-group row ml-0 mr-0">
+											<label class="col-form-label-sm col-sm-12 mb-0" for="input-targer">Место размещения</label>
+											<div class="col-sm-12">
+												<select id="input-target" name="input-target" class="form-control form-control-sm">
+													<option value="m"<?php if ($page['target']=="m") { echo " SELECTED"; } ?>>Главная</option>
+													<option value="e"<?php if ($page['target']=="e") { echo " SELECTED"; } ?>>Оборудование</option>
+                          <option value="s"<?php if ($page['target']=="s") { echo " SELECTED"; } ?>>Заглушка</option>
+												</select>
+											</div>
+										</div>
+                    
 									</div>
 									<div class="tab-pane fade" id="tab_ru">
 										<div class="form-group row ml-0 mr-0">
