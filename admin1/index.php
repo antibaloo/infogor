@@ -904,6 +904,8 @@ if ($sce=="slides_add") {
 if (in_array($_POST['input-status'], array("1", "3"))) { $status=$_POST['input-status']; } else { $status=1; }
 //Проверяем значение места размещения баннера
 if (in_array($_POST['input-target'], array("m","e","s"))) { $target = $_POST['input-target'];} else {$target = "m";}
+
+if (mb_strlen($_POST['input-info'])==0) { $info=""; } else { $info=$_POST['input-info']; }  
   
 	$query="SELECT max(position) as maxp, min(position) as minp FROM `".sql($GLOBALS['config']['bd_prefix'])."slides`;";
 	$str = mysqlq($query);
@@ -955,6 +957,7 @@ if (mb_strlen($_FILES['input-file-cn']['tmp_name'])>0) {
 }
 
 $k_result = mysqlq("INSERT INTO `".sql($GLOBALS['config']['bd_prefix'])."slides` (
+`info`,
 `name`, 
 `html`, 
 `link`, 
@@ -973,6 +976,7 @@ $k_result = mysqlq("INSERT INTO `".sql($GLOBALS['config']['bd_prefix'])."slides`
 `ip`,
 `target`
 ) VALUES (
+'".sql($info)."', 
 '".sql($name)."', 
 '".sql($html)."', 
 '".sql($link)."', 
@@ -1020,8 +1024,10 @@ red("?mod=slides_list");
 if (in_array($_POST['input-status'], array("1", "3"))) { $status=$_POST['input-status']; } else { $status=$page['status']; }
 //Проверяем значение места размещения баннера
 if (in_array($_POST['input-target'], array("m","e","s"))) { $target = $_POST['input-target'];} else {$target = $page['target'];}
-  
+//Проеверяем значение дополнительной информацияя
 if (mb_strlen($_POST['input-name'])==0) { $name=""; } else { $name=$_POST['input-name']; }
+  
+if (mb_strlen($_POST['input-info'])==0) { $info=""; } else { $info=$_POST['input-info']; }
 if (mb_strlen($_POST['input-html'])==0) { $html=""; } else { $html=$_POST['input-html']; }
 if (mb_strlen($_POST['input-link'])==0) { $link=""; } else { $link=$_POST['input-link']; }
 
@@ -1104,6 +1110,7 @@ if ($file_cn!="" and mb_strlen($page['file_cn'])>4 and file_exists("../upload/sl
 
 
 mysqlq("UPDATE `".sql($GLOBALS['config']['bd_prefix'])."slides` SET
+`info`='".sql($info)."',
 `name`='".sql($name)."', 
 `html`='".sql($html)."', 
 `link`='".sql($link)."', 
@@ -6674,6 +6681,14 @@ red("?mod=partners_list");
 												</select>
 											</div>
 										</div>
+                    <!-- Добавлено поле доплнительной информации-->
+                    <div class="form-group row ml-0 mr-0">
+											<label class="col-form-label-sm col-sm-12 mb-0" for="input-info">Дополнительная информация по рекламе</label>
+											<div class="col-sm-12">
+												<input type="text" id="input-info" name="input-info" class="form-control form-control-sm">
+											</div>
+										</div>
+                    
 									</div>
 									<div class="tab-pane fade" id="tab_ru">
 										<div class="form-group row ml-0 mr-0">
@@ -6811,7 +6826,13 @@ red("?mod=partners_list");
 												</select>
 											</div>
 										</div>
-                    
+                    <!-- Добавлено поле доплнительной информации-->
+                    <div class="form-group row ml-0 mr-0">
+											<label class="col-form-label-sm col-sm-12 mb-0" for="input-info">Дополнительная информация по рекламе</label>
+											<div class="col-sm-12">
+												<input type="text" id="input-info" name="input-info" class="form-control form-control-sm" value="<?php echo d($page['info']); ?>">
+											</div>
+										</div>
 									</div>
 									<div class="tab-pane fade" id="tab_ru">
 										<div class="form-group row ml-0 mr-0">
