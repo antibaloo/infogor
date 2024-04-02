@@ -2049,18 +2049,28 @@ if ($mod=="catalog") {
      <section class="hero">
       <div class="hero-slides">
 		<?php 
-		$query="SELECT * FROM `".sql($GLOBALS['config']['bd_prefix'])."slides` WHERE `status`='1' ORDER BY `position`, `id`;";
+    $targetSql = ($mod == "") ? "m":"e";
+    $maxSlides = 21;
+		$query="SELECT * FROM `".sql($GLOBALS['config']['bd_prefix'])."slides` WHERE `status`='1' AND `target` = '".sql($targetSql)." 'ORDER BY rand() LIMIT ".sql($maxSlides).";";
 		$str = mysqlq($query);
 		$arsql=mysql_fetch_assoc($str);
-		$numrows=mysql_num_rows($str);	
+		$numrows=mysql_num_rows($str);
+    
+    if ($numrows < 3){
+      $query="SELECT * FROM `".sql($GLOBALS['config']['bd_prefix'])."slides` WHERE `status`='1' AND `target` = '".sql($targetSql)."' UNION SELECT * FROM `".sql($GLOBALS['config']['bd_prefix'])."slides` WHERE `status`='1' AND `target` = 's' LIMIT 3;";
+		  $str = mysqlq($query);
+		  $arsql=mysql_fetch_assoc($str);
+		  $numrows=mysql_num_rows($str);
+    }
 		if ($numrows>0) { 
 		do { 
 		$file=$arsql['file'];
 		if ($arsql['file'.langpx()]!=$file and file_exists("upload/slides/".$arsql['file'.langpx()]) and mb_strlen($arsql['file'.langpx()])>4) { $file=$arsql['file'.langpx()]; }
 		?>
-        <a href="<?php echo $arsql['link'.langpx()]; ?>" class="hero-slide d-flex flex-column justify-content-center" style="background-image: url('/upload/slides/<?php echo d($file); ?>')">
+        <a href="<?php echo $arsql['link'.langpx()]; ?>" class="hero-slide d-flex flex-column justify-content-center" style="position: relative; background-image: url('/upload/slides/<?php echo d($file); ?>')">
         <?php echo $arsql['html'.langpx()]; ?>
-        </a>
+          <span class="position-absolute px-1 py-0 annerspan"><?php echo $arsql['info']?></span>
+          </a>
 		<?php } while ($arsql=mysql_fetch_assoc($str)); ?>
 		<?php } else { ?>
         <div class="hero-slide d-flex flex-column justify-content-center" style="background-image: url('img/slide1.png')"></div>
@@ -2068,7 +2078,6 @@ if ($mod=="catalog") {
       </div>
       <div class="slider-nav"></div>
     </section>   
-    
    
     
     
