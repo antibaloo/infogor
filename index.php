@@ -2235,14 +2235,14 @@ $catalog=catalog($page['catalog']);
             <?php if (!in_array($page['catalog'], array("8"))) {?><div class="mb-2 date"><?php echo lang("Дата размещения"); ?>: <?php echo d(date("d.m.Y H:i", $page['stamp'])); ?></div><?php }?>
             <?php if (!in_array($page['catalog'], array("8"))) {?>
 			<div class="d-flex gap-3 flex-wrap flex-md-nowrap">
-              <div class="price text-nowrap"><?php if ($catalog['check_zp']==0) { echo lang("Цена"); }else{ echo lang("Зар.плата"); } ?>: <?php echo d(fullprice($page['price'], $page['price_type'], $page['price_cur'])); ?></div>
+              <div class="price text-nowrap"><?php if ($page['catalog']!=67) {if ($catalog['check_zp']==0) { echo lang("Цена"); }else{ echo lang("Зар.плата"); } ?>: <?php echo d(fullprice($page['price'], $page['price_type'], $page['price_cur'])); }?></div>
 
             </div>
-			<?php }?>
+			<?php } ?>
             <div class="address mt-2 d-flex align-items-center gap-1">
-              <i class="fa-solid fa-location-dot"></i>
+              <?php if ($page['catalog']!=67) echo '<i class="fa-solid fa-location-dot"></i>';?>
               <div>
-			  <?php echo implode(", ", regionfull($page['region'])); ?>
+			  <?php if ($page['catalog']!=67) echo implode(", ", regionfull($page['region'])); ?>
               </div>
             </div>
 			<?php if (mb_strlen($follower['company'])>0) { ?>
@@ -2819,8 +2819,13 @@ $out2.="</a>";
                         <?php echo d($arsql['name'.langpx()]); ?>
                       </div>
                       <div class="d-flex align-items-center justify-content-between mt-2 kd-card__details">
-                        <span class="fw-bold"><?php echo d(fullprice($arsql['price'], $arsql['price_type'], $arsql['price_cur'])); ?></span>
-                        <span style="text-align: right;"><?php echo d(region($arsql['region'])['name'.langpx()]); ?><?php if ($page['type']!="k") { ?>, <?php echo d(date("d.m.Y H:i", $arsql['stamp'])); ?><?php } ?></span>
+                        <span class="fw-bold"><?php if ($arsql['catalog'] != 67) echo d(fullprice($arsql['price'], $arsql['price_type'], $arsql['price_cur'])); ?></span>
+                        <span style="text-align: right;">
+                          <?php if ($arsql['catalog'] == 67) { echo d(date("d.m.Y H:i", $arsql['stamp']));}else{
+                                echo d(region($arsql['region'])['name'.langpx()]);
+                                if ($page['type']!="k") echo ", ".d(date("d.m.Y H:i", $arsql['stamp']));
+                          }?>
+                        </span>
                       </div>
 					  <div class="d-flex align-items-center justify-content-between mt-2 kd-socials kd-list-phone"><?php if (mb_strlen($follower['phone'])>0) { ?><div class="d-flex align-items-center gap-2"><i class="fa-solid fa-phone"></i> <?php echo phone_format($follower['phone']); ?></div><?php } ?></div>
                       <p class="my-2">
