@@ -5711,7 +5711,7 @@ $out2.="</a>";
 		<?php
 		$out1="";
 		$out2="";
-			$query="SELECT * FROM `".sql($GLOBALS['config']['bd_prefix'])."items` WHERE `type`='p' and `catalog`!='8' and `status`='1' ORDER BY id DESC LIMIT 6;";
+			$query="SELECT * FROM `".sql($GLOBALS['config']['bd_prefix'])."items` WHERE `type`='p' and `catalog`!='8' and `catalog`!='67' and `status`='1' ORDER BY id DESC LIMIT 6;";
 			$str = mysqlq($query);
 			$arsql=mysql_fetch_assoc($str);
 			$numrows=mysql_num_rows($str);
