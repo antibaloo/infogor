@@ -419,10 +419,24 @@ if ($sce=="ajax_changestatusslides") {
 		echo json_encode(array("result" => "0", "id" => $id));
 		exit;
 	}else{
-		if ($arsql['status']=="1") { 
-			mysqlq("UPDATE `".sql($GLOBALS['config']['bd_prefix'])."slides` SET `status`='3' WHERE `id`='".sql($id)."' LIMIT 1;");
-			$status="btn-danger"; 
-			$html="<i class=\"fa fa-times\"></i>"; 
+		if ($arsql['status']=="1") {
+      if ($arsql['target'] == "s"){ //Контроль деактивации слайда-зуглушки
+        $stubQuery = "SELECT * FROM `".sql($GLOBALS['config']['bd_prefix'])."slides` WHERE `target`='s' and `status` = 1;";
+        $stubStr = mysqlq($stubQuery);
+        $numStubs = mysql_num_rows($stubStr);
+        if ($numStubs <= 3){
+          echo json_encode(array("result" => "0", "id" => $id));
+          //echo json_encode(array("result" => "1", "id" => $id,"status" =>"btn-success", "html" =>"<i class=\"fa fa-check\"></i>"));
+          exit;
+        }
+        mysqlq("UPDATE `".sql($GLOBALS['config']['bd_prefix'])."slides` SET `status`='3' WHERE `id`='".sql($id)."' LIMIT 1;");
+        $status="btn-danger"; 
+        $html="<i class=\"fa fa-times\"></i>";
+      }else{
+        mysqlq("UPDATE `".sql($GLOBALS['config']['bd_prefix'])."slides` SET `status`='3' WHERE `id`='".sql($id)."' LIMIT 1;");
+        $status="btn-danger"; 
+        $html="<i class=\"fa fa-times\"></i>";
+      }
 		}elseif ($arsql['status']=="3") { 
 			mysqlq("UPDATE `".sql($GLOBALS['config']['bd_prefix'])."slides` SET `status`='1' WHERE `id`='".sql($id)."' LIMIT 1;");
 			$status="btn-success"; 
@@ -4011,7 +4025,19 @@ if ($numrows==0) {
 alert("Ошибка удаления!", "Слайд не найден", "times", "danger");
 red("?mod=slides_list");	
 }
+//Контроль удаления заглушки
+if ($arsql['target'] == 's' && $arsql['status'] == 1){
+  $stubQuery = "SELECT * FROM `".sql($GLOBALS['config']['bd_prefix'])."slides` WHERE `target`='s' and `status` = 1;";
+  $stubStr = mysqlq($stubQuery);
+  $numStubs = mysql_num_rows($stubStr);
+  if ($numStubs <= 3){
+    alert("Ошибка удаления!", "В систему загружено ".$numStubs." слайда-заглушки, их не может быть меньше 3-х, удаление невозможно!", "times", "danger");
+    red("?mod=slides_list");
+  }
+  
+}  
 
+  
 if (mb_strlen($arsql['file'])>4) {
 	if (file_exists("../upload/slides/".$arsql['file'])){	
 		unlink("../upload/slides/".$arsql['file']);
