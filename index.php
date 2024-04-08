@@ -2313,6 +2313,9 @@ $catalog=catalog($page['catalog']);
         </div>
       </div>
     </section>
+    
+    <!-- Под объявлением на широких устройствах -->
+    <?php if ($page['catalog'] != 67){?>
     <section class="kds d-none d-md-block pb-5">
       <div class="container">
         <h3 class="title"><?php echo lang("Форвардные объявления"); ?></h3>
@@ -2320,7 +2323,7 @@ $catalog=catalog($page['catalog']);
 		<?php
 		$out1="";
 		$out2="";
-			$query="SELECT * FROM `".sql($GLOBALS['config']['bd_prefix'])."items` WHERE `type`='p' and `catalog`!='8' and `status`='1' ORDER BY id DESC LIMIT 6;";
+			$query="SELECT * FROM `".sql($GLOBALS['config']['bd_prefix'])."items` WHERE `type`='p' and `catalog`!='8' and `catalog`!='67' and `status`='1' ORDER BY id DESC LIMIT 6;";
 			$str = mysqlq($query);
 			$arsql=mysql_fetch_assoc($str);
 			$numrows=mysql_num_rows($str);
@@ -2379,11 +2382,12 @@ $out2.="</a>";
 		
 		
 		?>
-		
+		 
 			<?php echo $out1; ?>
         </div>
       </div>
     </section>
+     <!-- Под объявлением на узких устройствах-->
     <section class="kds d-block d-md-none pb-5">
       <div class="container">
         <h3 class="title"><?php echo lang("Форвардные объявления"); ?></h3>
@@ -2392,7 +2396,7 @@ $out2.="</a>";
         </div>
       </div>
     </section>
-	
+	<?php }?>
 <?php }elseif($mod=="catalog"){ 
 
 		if (in_array($_GET['type'], array("p", "s", "k"))){
@@ -5703,7 +5707,7 @@ $out2.="</a>";
 		</div>	 
     </section>
 	<?php } ?>	
-		
+		<!-- Главная страница -->
     <section class="kds d-none d-md-block pb-5">
       <div class="container">
         <h3 class="title"><?php echo lang("Форвардные объявления"); ?></h3>
@@ -5770,7 +5774,7 @@ $out2.="</a>";
 		
 		
 		?>
-		
+		<!-- Главная на узких устройствах-->
 			<?php echo $out1; ?>
         </div>
       </div>
