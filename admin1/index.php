@@ -917,7 +917,7 @@ if ($sce=="slides_add") {
 	
 if (in_array($_POST['input-status'], array("1", "3"))) { $status=$_POST['input-status']; } else { $status=1; }
 //Проверяем значение места размещения баннера
-if (in_array($_POST['input-target'], array("m","e3","e9","e11","e42","e14","e12","e10","e13","e68","s"))) { $target = $_POST['input-target'];} else {$target = "m";}
+if (in_array($_POST['input-target'], array("m","e3","e9","e11","e42","e14","e12","e10","e13","s"))) { $target = $_POST['input-target'];} else {$target = "m";}
 
 if (mb_strlen($_POST['input-info'])==0) { $info=""; } else { $info=$_POST['input-info']; }  
   
@@ -1037,7 +1037,7 @@ red("?mod=slides_list");
 	
 if (in_array($_POST['input-status'], array("1", "3"))) { $status=$_POST['input-status']; } else { $status=$page['status']; }
 //Проверяем значение места размещения баннера
-if (in_array($_POST['input-target'], array("m","e3","e9","e11","e42","e14","e12","e10","e13", "e68", "s"))) { $target = $_POST['input-target'];} else {$target = $page['target'];}
+if (in_array($_POST['input-target'], array("m","e3","e9","e11","e42","e14","e12","e10","e13", "s"))) { $target = $_POST['input-target'];} else {$target = $page['target'];}
 //Проеверяем значение дополнительной информацияя
 if (mb_strlen($_POST['input-name'])==0) { $name=""; } else { $name=$_POST['input-name']; }
   
@@ -5585,7 +5585,6 @@ red("?mod=partners_list");
               "e12" => "Лабораторное оборудование",
               "e10" => "Оборудование для подземной добычи",
               "e13" => "Транспортное оборудование",
-              "e68" => "Лизинг",
                "s"  => "Заглушка"
             );
 						$maxid=0;
@@ -6724,7 +6723,6 @@ red("?mod=partners_list");
                           <option value="e12">Лабораторное оборудование</option>
                           <option value="e10">Оборудование для подземной добычи</option>
                           <option value="e13">Транспортное оборудование</option>
-                          <option value="e68">Лизинг</option>
                           <option value="s">Заглушка</option>
 												</select>
 											</div>
@@ -6877,7 +6875,6 @@ red("?mod=partners_list");
                           <option value="e12"<?php if ($page['target']=="e12") { echo " SELECTED"; } ?>>Лабораторное оборудование</option>
                           <option value="e10"<?php if ($page['target']=="e10") { echo " SELECTED"; } ?>>Оборудование для подземной добычи</option>
                           <option value="e13"<?php if ($page['target']=="e13") { echo " SELECTED"; } ?>>Транспортное оборудование</option>
-                          <option value="e68"<?php if ($page['target']=="e68") { echo " SELECTED"; } ?>>Лизинг</option>
                           <option value="s"<?php if ($page['target']=="s") { echo " SELECTED"; } ?>>Заглушка</option>
 												</select>
 											</div>
