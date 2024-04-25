@@ -230,9 +230,78 @@ nav .dropdown-item {
   max-height: 329px;
   overflow: hidden;
 }
+@media (max-width: 1680px) {
+  .hero-slides {
+    max-height: 258px;
+  }
+}
+@media (max-width: 1440px) {
+  .hero-slides {
+    max-height: 235px;
+  }
+}
+@media (max-width: 1200px) {
+  .hero-slides {
+    max-height: 215px;
+  }
+}
+@media (max-width: 992px) {
+  .hero-slides {
+    max-height: 200px;
+  }
+}
 @media (max-width: 768px) {
   .hero-slides {
-    max-height: 125px;
+    max-height: 160px;
+  }
+}
+@media (max-width: 576px) {
+  .hero-slides {
+    max-height: 148px;
+  }
+}
+@media (max-width: 412px) {
+  .hero-slides {
+    max-height: 104px;
+  }
+}
+.hero-slide {
+  height: 329px;
+  background-size: cover !important;
+}
+@media (max-width: 1680px) {
+  .hero-slide {
+    height: 258px;
+  }
+}
+@media (max-width: 1440px) {
+  .hero-slide {
+    height: 235px;
+  }
+}
+@media (max-width: 1200px) {
+  .hero-slide {
+    height: 215px;
+  }
+}
+@media (max-width: 992px) {
+  .hero-slide {
+    height: 200px;
+  }
+}
+@media (max-width: 768px) {
+  .hero-slide {
+    height: 160px;
+  }
+}
+@media (max-width: 576px) { 
+  .hero-slide {
+    height: 148px;
+  }
+}
+@media (max-width: 412px) {
+  .hero-slide {
+    max-height: 104px;
   }
 }
 .hero p {
@@ -245,15 +314,8 @@ nav .dropdown-item {
     font-size: 14px;
   }
 }
-.hero-slide {
-  height: 329px;
-  background-size: cover !important;
-}
-@media (max-width: 768px) {
-  .hero-slide {
-    height: 125px;
-  }
-}
+
+
 .hero .slick-prev {
   left: 0;
   z-index: 10;
@@ -1194,4 +1256,43 @@ a.st:hover svg {
   transition: all 0.3s ease-in-out;
 }
 
+/* Стили для нового слайдера */
+
+.slContainer {
+  margin: auto;
+  padding-left: 45px;
+  padding-right: 45px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.coverSlide{
+  position: relative;
+}
+
+.htmlSl{
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.adSpan{
+  position: absolute;
+  bottom: 0;
+  right: 1%;
+  font-size: 10px;
+  opacity: .7;
+  background: rgb(255,255,255);
+  color: #555;
+}
+
+.coverSlide img{
+  margin: auto;
+  width: 99%;
+}
+.slick-prev:before, .slick-next:before {
+    color: black;!important
+}
 /*# sourceMappingURL=style.css.map */

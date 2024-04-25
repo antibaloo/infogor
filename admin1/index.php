@@ -917,7 +917,7 @@ if ($sce=="slides_add") {
 	
 if (in_array($_POST['input-status'], array("1", "3"))) { $status=$_POST['input-status']; } else { $status=1; }
 //Проверяем значение места размещения баннера
-if (in_array($_POST['input-target'], array("m","e","s"))) { $target = $_POST['input-target'];} else {$target = "m";}
+if (in_array($_POST['input-target'], array("m","e3","e9","e11","e42","e14","e12","e10","e13","e68","s"))) { $target = $_POST['input-target'];} else {$target = "m";}
 
 if (mb_strlen($_POST['input-info'])==0) { $info=""; } else { $info=$_POST['input-info']; }  
   
@@ -1037,7 +1037,7 @@ red("?mod=slides_list");
 	
 if (in_array($_POST['input-status'], array("1", "3"))) { $status=$_POST['input-status']; } else { $status=$page['status']; }
 //Проверяем значение места размещения баннера
-if (in_array($_POST['input-target'], array("m","e","s"))) { $target = $_POST['input-target'];} else {$target = $page['target'];}
+if (in_array($_POST['input-target'], array("m","e3","e9","e11","e42","e14","e12","e10","e13", "e68", "s"))) { $target = $_POST['input-target'];} else {$target = $page['target'];}
 //Проеверяем значение дополнительной информацияя
 if (mb_strlen($_POST['input-name'])==0) { $name=""; } else { $name=$_POST['input-name']; }
   
@@ -2233,9 +2233,11 @@ $kk=1;
 					$kk++;
 					$total++;
 				}else{
+          $mes1="not all 1";
 					// Не все фотографии загрузились
 				}
 			}else{
+        $mes2=" not all 2";
 				// Не все фотографии загрузились
 			}
 		}
@@ -2247,7 +2249,7 @@ compacttable("items_files", "item");
 
 
 
-alert("Объявление изменено!", "Объявление успешно изменено", "check", "success");
+alert("Объявление изменено!", "Объявление успешно изменено".$mes1.$mes2, "check", "success");
 red($_SERVER['HTTP_REFERER']);	
 	
 }
@@ -5573,7 +5575,19 @@ red("?mod=partners_list");
                         <tbody>
 						
 						<?php
-						$targets = array("m" => "Главная", "e" => "Оборудование", "s" => "Заглушка");
+						$targets = array(
+              "m"   => "Главная",
+              "e3"  => "Оборудование",
+              "e9"  => "Карьерная техника",
+              "e11" => "Обогатительное оборудованипе",
+              "e42" => "Буровое оборудование",
+              "e14" => "Вспомогательное оборудование",
+              "e12" => "Лабораторное оборудование",
+              "e10" => "Оборудование для подземной добычи",
+              "e13" => "Транспортное оборудование",
+              "e68" => "Лизинг",
+               "s"  => "Заглушка"
+            );
 						$maxid=0;
 						$query="SELECT * FROM `".sql($GLOBALS['config']['bd_prefix'])."slides` WHERE `id`>0 ORDER BY `position`, `id` DESC;";
 						$str = mysqlq($query);
@@ -6702,7 +6716,15 @@ red("?mod=partners_list");
 											<div class="col-sm-12">
 												<select id="input-target" name="input-target" class="form-control form-control-sm">
 													<option value="m" SELECTED>Главная</option>
-													<option value="e">Оборудование</option>
+                          <option value="e3">Оборудование</option>
+                          <option value="e9">Карьерная техника</option>
+                          <option value="e11">Обогатительное оборудование</option>
+                          <option value="e42">Буровое оборудование</option>
+                          <option value="e14">Вспомогательное оборудование</option>
+                          <option value="e12">Лабораторное оборудование</option>
+                          <option value="e10">Оборудование для подземной добычи</option>
+                          <option value="e13">Транспортное оборудование</option>
+                          <option value="e68">Лизинг</option>
                           <option value="s">Заглушка</option>
 												</select>
 											</div>
@@ -6847,7 +6869,15 @@ red("?mod=partners_list");
 											<div class="col-sm-12">
 												<select id="input-target" name="input-target" class="form-control form-control-sm">
 													<option value="m"<?php if ($page['target']=="m") { echo " SELECTED"; } ?>>Главная</option>
-													<option value="e"<?php if ($page['target']=="e") { echo " SELECTED"; } ?>>Оборудование</option>
+                          <option value="e3"<?php if ($page['target']=="e3") { echo " SELECTED"; } ?>>Оборудование</option>
+                          <option value="e9"<?php if ($page['target']=="e9") { echo " SELECTED"; } ?>>Карьерная техника</option>
+                          <option value="e11"<?php if ($page['target']=="e11") { echo " SELECTED"; } ?>>Обогатительное оборудование</option>
+                          <option value="e42"<?php if ($page['target']=="e42") { echo " SELECTED"; } ?>>Буровое оборудование</option>
+                          <option value="e14"<?php if ($page['target']=="e14") { echo " SELECTED"; } ?>>Вспомогательное оборудование</option>
+                          <option value="e12"<?php if ($page['target']=="e12") { echo " SELECTED"; } ?>>Лабораторное оборудование</option>
+                          <option value="e10"<?php if ($page['target']=="e10") { echo " SELECTED"; } ?>>Оборудование для подземной добычи</option>
+                          <option value="e13"<?php if ($page['target']=="e13") { echo " SELECTED"; } ?>>Транспортное оборудование</option>
+                          <option value="e68"<?php if ($page['target']=="e68") { echo " SELECTED"; } ?>>Лизинг</option>
                           <option value="s"<?php if ($page['target']=="s") { echo " SELECTED"; } ?>>Заглушка</option>
 												</select>
 											</div>

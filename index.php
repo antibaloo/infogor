@@ -2040,53 +2040,46 @@ if ($mod=="catalog") {
         </div>
       </nav>
     </header>
-    
-    <!-- Слайд-шоу или заглушка -->
-<?php
-    $pagesWithSlideer = array(3,9,10,11,12,13,14,42);
-    
-    if ($mod == "" || in_array($page['id'],$pagesWithSlideer)) { ?>
-     <section class="hero">
-      <div class="hero-slides">
-		<?php 
-    $targetSql = ($mod == "") ? "m":"e";
-    $maxSlides = 21;
-		$query="SELECT * FROM `".sql($GLOBALS['config']['bd_prefix'])."slides` WHERE `status`='1' AND `target` = '".sql($targetSql)." 'ORDER BY rand() LIMIT ".sql($maxSlides).";";
-		$str = mysqlq($query);
-		$arsql=mysql_fetch_assoc($str);
-		$numrows=mysql_num_rows($str);
-    
-    if ($numrows < 3){
-      $query="SELECT * FROM `".sql($GLOBALS['config']['bd_prefix'])."slides` WHERE `status`='1' AND `target` = '".sql($targetSql)."' UNION SELECT * FROM `".sql($GLOBALS['config']['bd_prefix'])."slides` WHERE `status`='1' AND `target` = 's' LIMIT 3;";
-		  $str = mysqlq($query);
+    <!-- Новое слайд-шоу -->
+    <?php if ($mod == "" || $page['id'] ==3 || $page['parent'] == 3) { ?>
+    <div class="slContainer">
+      <div class="slResponsive">
+    <?php
+      $targetSql = ($mod == "") ? "m":"e".$page['id'];
+      $maxSlides = 21;
+      $query="SELECT * FROM `".sql($GLOBALS['config']['bd_prefix'])."slides` WHERE `status`='1' AND `target` = '".sql($targetSql)." 'ORDER BY rand() LIMIT ".sql($maxSlides).";";
+      $str = mysqlq($query);
 		  $arsql=mysql_fetch_assoc($str);
-		  $numrows=mysql_num_rows($str);
-    }
-		if ($numrows>0) { 
-		do { 
-		$file=$arsql['file'];
-		if ($arsql['file'.langpx()]!=$file and file_exists("upload/slides/".$arsql['file'.langpx()]) and mb_strlen($arsql['file'.langpx()])>4) { $file=$arsql['file'.langpx()]; }
-		?>
-        <a href="<?php echo $arsql['link'.langpx()]; ?>" class="hero-slide d-flex flex-column justify-content-center" style="position: relative; background-image: url('/upload/slides/<?php echo d($file); ?>')">
-        <?php echo $arsql['html'.langpx()]; ?>
-          <span class="position-absolute px-1 py-0 annerspan"><?php echo $arsql['info']?></span>
+	  	$numrows=mysql_num_rows($str);
+      if ($numrows < 3){
+        $query="SELECT * FROM `".sql($GLOBALS['config']['bd_prefix'])."slides` WHERE `status`='1' AND `target` = '".sql($targetSql)."' UNION SELECT * FROM `".sql($GLOBALS['config']['bd_prefix'])."slides` WHERE `status`='1' AND `target` = 's' LIMIT 3;";
+        $str = mysqlq($query);
+		    $arsql=mysql_fetch_assoc($str);
+		    $numrows=mysql_num_rows($str);
+      }
+      if ($numrows>0) {
+        do {
+          $file=$arsql['file'];
+		      if ($arsql['file'.langpx()]!=$file and file_exists("upload/slides/".$arsql['file'.langpx()]) and mb_strlen($arsql['file'.langpx()])>4) { $file=$arsql['file'.langpx()]; }
+    ?>
+        <div class="coverSlide">
+          <a href="<?php echo $arsql['link'.langpx()]; ?>">
+            <img src="/upload/slides/<?php echo d($file);?>">
+            <div class="htmlSl">
+              <?php echo $arsql['html'.langpx()];?>
+            </div>
+            <span class="adSpan"><?php echo $arsql['info']?></span>
           </a>
-		<?php } while ($arsql=mysql_fetch_assoc($str)); ?>
-		<?php } else { ?>
-        <div class="hero-slide d-flex flex-column justify-content-center" style="background-image: url('img/slide1.png')"></div>
-		<?php } ?>
+        </div>
+    <?php
+        }while ($arsql=mysql_fetch_assoc($str));
+      }
+    ?>
       </div>
-      <div class="slider-nav"></div>
-    </section>   
-   
-    
-    
-<?php } else { ?>
-<section class="hero-inner">
-      <div><img src="/img/inner-hero.png" alt="" /></div>
-    </section>
-<?php } ?>
-    
+    </div>
+    <?php }?>
+    <!-- Слайд-шоу или заглушка -->
+
     <!-- -->
     <div class="d-lg-none d-block mt-3 mb-0">
 	<form action="<?php echo l("catalog", 0, $GLOBALS['user']['lang']); ?>" method="get"><input type="hidden" name="type" value="p">
@@ -4134,7 +4127,7 @@ $out2.="</a>";
 <p align="RIGHT" style="margin-bottom: 0cm">on the publication of thematic (advertising) information</p>
 <p align="RIGHT" style="margin-bottom: 0cm">on the website of the Mining Exchange information portal</p>
 <p style="text-align: center; margin-bottom: 0cm;"><b>Tariffs</b><br></p>
-<p style="margin-bottom: 0cm"><br>
+<p style="text-align: center; margin-bottom: 0cm"><br>The cost of posting information on the portal is indicated for residents of the Russian Federation.<br>For non-residents, the placement price is determined by agreement.
 </p>
 <p style="margin-bottom: 0cm" align="center"><br>
 </p>
@@ -4142,63 +4135,63 @@ $out2.="</a>";
 					<tr>
 						<th class="fw-bold col-1 col-md-1 text-center">№</th>
 						<th class="fw-bold col-2 col-md-2 text-center">Tariff</th>
-						<th class="fw-bold col-2 col-md-2 text-center">Price</th>
+						<th class="fw-bold col-2 col-md-2 text-center">Price <br>(for residents of the Russian Federation)</th>
 						<th class="fw-bold col-4 col-md-4 text-center">Options included</th>
 						<th class="fw-bold col-3 col-md-3 text-center d-none d-md-table-cell">Subscription plan</th>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">1</td>
 						<td class="text-center align-middle p-2">Standard</td>
-						<td class="text-center align-middle p-2">5000 RUB<br>(upon payment more than 3 ads the price is 4500 RUB per ad, more than 5 ads the price is 4000 RUB per ad)</td>
+						<td class="text-center align-middle p-2">From 5,000 RUB</td>
 						<td class="text-left align-middle p-2">This tariff enables the Customer to place one informational ad per month in one appropriate subsection (name of equipment, services, raw materials, besides staff section)</td>
-						<td class="text-center align-middle p-2 d-none d-md-table-cell">3 months – 12,000 RUB<br>6 months – 22,000 RUB<br>12 months– 40,000 RUB</td>
+						<td class="text-center align-middle p-2 d-none d-md-table-cell">&nbsp;</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">2</td>
 						<td class="text-center align-middle p-2">Standard Plus</td>
-						<td class="text-center align-middle p-2">7000 RUB<br>(upon payment more than 3 ads the price is 6500 RUB per ad, more than 5 ads the price is 6000 RUB per ad)</td>
+						<td class="text-center align-middle p-2">From 7,000 RUB</td>
 						<td class="text-left align-middle p-2">This tariff enables the Customer to place one informational ad per month in one section (name of equipment, services, raw materials, besides staff section), with photo or demo video attachment to the ad</td>
-						<td class="text-center align-middle p-2 d-none d-md-table-cell">3 months – 18,000 RUB<br>6 months – 34,000 RUB<br>12 months – 65,000 RUB</td>
+						<td class="text-center align-middle p-2 d-none d-md-table-cell">&nbsp;</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">3</td>
 						<td class="text-center align-middle p-2">Advertising Banner Placement</td>
 						<td class="text-center align-middle p-2">According to class</td>
-						<td class="text-left align-middle p-2">This tariff enables the Customer to place one advertising banner<br>1100х100 — for PC-version;<br>409х100 — for mobile version</td>
-						<td class="text-center align-middle p-2 d-none d-md-table-cell"><b>The advertiser is solely responsible for the accuracy of the information on the advertising banners.</b></td>
+						<td class="text-left align-middle p-2">This tariff enables the Customer to place one advertising banner<br>1600х300 — for PC-version;<br>320х140 — for mobile version</td>
+						<td class="text-center align-middle p-2 d-none d-md-table-cell">The advertiser is solely responsible for the accuracy of the information on the advertising banners.</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">3.1</td>
 						<td class="text-center align-middle p-2">A-class Banner Placement</td>
-						<td class="text-center align-middle p-2">150,000 RUB per month</td>
+						<td class="text-center align-middle p-2">from 150,000 RUB per month</td>
 						<td class="text-left align-middle p-2">On the front site page</td>
-						<td class="text-center align-middle p-2 d-none d-md-table-cell">3 months – 400,000 RUB<br>6 months – 750,000 RUB<br>12 months – 1,400,000 RUB</td>
+						<td class="text-center align-middle p-2 d-none d-md-table-cell">3 months – from 400,000 RUB<br>6 months – from 750,000 RUB<br>12 months – from 1,400,000 RUB</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">3.2</td>
 						<td class="text-center align-middle p-2">B-class Banner Placement</td>
-						<td class="text-center align-middle p-2">100,000 RUB per month</td>
+						<td class="text-center align-middle p-2">from 100,000 RUB per month</td>
 						<td class="text-left align-middle p-2">In thematic section<br>(for example Equipment)</td>
-						<td class="text-center align-middle p-2 d-none d-md-table-cell">3 months – 250,000 RUB<br>6 months – 450,000 RUB<br>12 months – 850,000 RUB</td>
+						<td class="text-center align-middle p-2 d-none d-md-table-cell">3 months – from 250,000 RUB<br>6 months – from 450,000 RUB<br>12 months – from 850,000 RUB</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">3.3</td>
 						<td class="text-center align-middle p-2">C-class Banner Placement</td>
-						<td class="text-center align-middle p-2">50,000 RUB per month</td>
+						<td class="text-center align-middle p-2">from 50,000 RUB per month</td>
 						<td class="text-left align-middle p-2">In thematic subsection<br>(for example Drilling Equipment)</td>
-						<td class="text-center align-middle p-2 d-none d-md-table-cell">3 months – 140,000 RUB<br>6 months – 270,000 RUB<br>12 months– 530,000 RUB</td>
+						<td class="text-center align-middle p-2 d-none d-md-table-cell">3 months – from 140,000 RUB<br>6 months – from 270,000 RUB<br>12 months– from 530,000 RUB</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">3.4</td>
 						<td class="text-center align-middle p-2">Banner design</td>
 						<td class="text-center align-middle p-2">from 10,000 RUB</td>
 						<td class="text-left align-middle p-2">Based on Customer’s materials</td>
-						<td class="text-center align-middle p-2 d-none d-md-table-cell"></td>
+						<td class="text-center align-middle p-2 d-none d-md-table-cell">&nbsp;</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">4</td>
 						<td class="text-center align-middle p-2">Article Placement</td>
-						<td class="text-center align-middle p-2">50,000 RUB</td>
+						<td class="text-center align-middle p-2">from 50,000 RUB</td>
 						<td class="text-left align-middle p-2">The tariff enables the Customer to place an article in News section<br>Up to 5000 characters— placement on the web-site;<br>Up to 2000 characters — in Telegram channel</td>
 						<td class="text-center align-middle p-2 d-none d-md-table-cell">&nbsp;</td>
 					</tr>
@@ -4219,7 +4212,7 @@ $out2.="</a>";
 					<tr>
 						<td class="text-center align-middle p-2">7</td>
 						<td class="text-center align-middle p-2">Vacancy Placement</td>
-						<td class="text-center align-middle p-2">1000 RUB</td>
+						<td class="text-center align-middle p-2">1,000 RUB</td>
 						<td class="text-left align-middle p-2">The tariff enables the Customer to place one vacancy in Vacancies section for one month</td>
 						<td class="text-center align-middle p-2 d-none d-md-table-cell">&nbsp;</td>
 					</tr>
@@ -4247,22 +4240,22 @@ $out2.="</a>";
 					<tr>
 						<td class="text-center align-middle p-2">11</td>
 						<td class="text-center align-middle p-2">VIP Club Gorny Mir Membership</td>
-						<td class="text-center align-middle p-2">100,000 RUB per year</td>
+						<td class="text-center align-middle p-2">from 100,000 RUB per year</td>
 						<td class="text-left align-middle p-2">This tariff enables the Customer to participate in Gorny Mir Club’s meetings.<br>The Customer is admitted to Club’s database (exclusive offers of mines and raw materials sale)</td>
 						<td class="text-center align-middle p-2 d-none d-md-table-cell">&nbsp;</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">12</td>
 						<td class="text-center align-middle p-2">Silver Card</td>
-						<td class="text-center align-middle p-2">1,000,000 RUB per year</td>
+						<td class="text-center align-middle p-2">from 1,000,000 RUB per year</td>
 						<td class="text-left align-middle p-2">1-year membership in VIP club Gorny Mir.<br>This tariff has the following advantages:<br>- placement up to 10 (ten) ads in thematic sections (equipment, services, raw materials, etc.);<br>- advertising banner placement (+ placement of the link to the goods and services catalogue + attach the equipment demo).<br>This tariff includes:<br>- personal manager service;<br>- one article placement in News section.<br>This tariff provides the access to the portal database (including hidden details)</td>
 						<td class="text-center align-middle p-2 d-none d-md-table-cell">&nbsp;</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">13</td>
 						<td class="text-center align-middle p-2">Golden Card</td>
-						<td class="text-center align-middle p-2">5,000,000 RUB per year</td>
-						<td class="text-left align-middle p-2">1-year membership in VIP club Gorny Mir.<br>This tariff has the following advantages:<br>- placement up to 50 (fifty) ads in thematic sections (equipment, services, raw materials, etc.);<br>- advertising banner placement (+ placement of the link to the goods and services catalogue + attach the equipment<br></td>
+						<td class="text-center align-middle p-2">from 5,000,000 RUB per year</td>
+						<td class="text-left align-middle p-2">1-year membership in VIP club Gorny Mir.<br>This tariff has the following advantages:<br>-place up to 10 (ten) different thematic ads on the portal in the appropriate subsections (equipment, services, vacancies, raw materials, etc.);<br>-has the right to place his advertising banner in the appropriate section or subsection (+place a link to his catalog (products/services), +attach a demo video of his equipment).<br>Gives the right to:<br>-personal manager service;<br>-placement of one article in the news section.<br></td>
 						<td class="text-center align-middle p-2 d-none d-md-table-cell">&nbsp;</td>
 					</tr>
 				</table>
@@ -4524,57 +4517,58 @@ $out2.="</a>";
 <p style="text-align: center; margin-bottom: 0cm;"><b>收费标准</b><br></p>
 <p style="margin-bottom: 0cm"><br>
 </p>
-<p style="margin-bottom: 0cm" align="center"><br>
+<p style="margin-bottom: 0cm" align="center"><br>在门户网站上发布信息的费用是针对俄罗斯联邦居民的。<br>
+对于非居民，配售价格由协议确定。
 </p>
 				<table class="table table-bordered">
 					<tr>
 						<th class="fw-bold col-1col-md-1 text-center">№</th>
 						<th class="fw-bold col-2col-md-2 text-center">收费标准</th>
-						<th class="fw-bold col-2col-md-2 text-center">价格</th>
+						<th class="fw-bold col-2col-md-2 text-center">价格（适用于俄罗斯联邦居民）</th>
 						<th class="fw-bold col-4col-md-4 text-center">包含的选项</th>
 						<th class="fw-bold col-3col-md-3 text-center d-none d-md-table-cell">订阅计划</th>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">1</td>
 						<td class="text-center align-middle p-2">标准</td>
-						<td class="text-center align-middle p-2">5000RUB<br>（支付超过3个广告的价格为每个广告4500RUB，超过5个广告的价格为每个广告4000RUB）</td>
+						<td class="text-center align-middle p-2">起5,000RUB</td>
 						<td class="text-left align-middle p-2">此资费允许客户每月在一个适当的小节（设备，服务，原材料名称，员工部分除外）中放置一个信息广告</td>
-						<td class="text-center align-middle p-2d-none d-md-table-cell">3个月-12,000RUB<br>6个月-22,000RUB<br>12个月-40,000RUB</td>
+						<td class="text-center align-middle p-2d-none d-md-table-cell">&nbsp;</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">2</td>
 						<td class="text-center align-middle p-2">标准加</td>
-						<td class="text-center align-middle p-2">7000RUB<br>（支付超过3个广告的价格为每个广告6500RUB，超过5个广告的价格为每个广告6000RUB）</td>
+						<td class="text-center align-middle p-2">起7,000RUB</td>
 						<td class="text-left align-middle p-2">此资费允许客户每月在一个部分（设备名称，服务，原材料，员工部分除外）放置一个信息广告，并在广告上附上照片或演示视频</td>
-						<td class="text-center align-middle p-2d-none d-md-table-cell">3个月-18,000RUB<br>6个月-34,000RUB<br>12个月-65,000RUB</td>
+						<td class="text-center align-middle p-2d-none d-md-table-cell">&nbsp;</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">3</td>
 						<td class="text-center align-middle p-2">广告横幅放置</td>
 						<td class="text-center align-middle p-2">根据class</td>
-						<td class="text-left align-middle p-2">此资费允许客户放置一个广告横幅<br>1100Х100—PC版;<br>409х100—移动版</td>
-						<td class="text-center align-middle p-2d-none d-md-table-cell"><b>广告商完全负责广告横幅的信息的准确性。</b></td>
+						<td class="text-left align-middle p-2">此资费允许客户放置一个广告横幅<br>1600Х300—PC版;<br>320х140—移动版</td>
+						<td class="text-center align-middle p-2d-none d-md-table-cell">广告商完全负责广告横幅的信息的准确性。</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">3.1</td>
 						<td class="text-center align-middle p-2">a类横幅放置</td>
 						<td class="text-center align-middle p-2">每月150,000RUB</td>
 						<td class="text-left align-middle p-2">首页</td>
-						<td class="text-center align-middle p-2d-none d-md-table-cell">3个月-400,000RUB<br>6个月-750,000RUB<br>12个月-1,400,000RUB</td>
+						<td class="text-center align-middle p-2d-none d-md-table-cell">3个月-起400,000RUB<br>6个月-起750,000RUB<br>12个月-起1,400,000RUB</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">3.2</td>
 						<td class="text-center align-middle p-2">B级横幅放置</td>
 						<td class="text-center align-middle p-2">每月100,000RUB</td>
 						<td class="text-left align-middle p-2">主题部分<br>（例如设备）</td>
-						<td class="text-center align-middle p-2d-none d-md-table-cell">3个月-250,000RUB<br>6个月-450,000RUB<br>12个月-850,000RUB</td>
+						<td class="text-center align-middle p-2d-none d-md-table-cell">3个月-起250,000RUB<br>6个月-起450,000RUB<br>12个月-起850,000RUB</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">3.3</td>
 						<td class="text-center align-middle p-2">C类横幅放置</td>
 						<td class="text-center align-middle p-2">每月50,000RUB</td>
 						<td class="text-left align-middle p-2">主题小节<br>（例如钻井设备）</td>
-						<td class="text-center align-middle p-2d-none d-md-table-cell">3个月-140,000RUB<br>6个月-270,000RUB<br>12个月-530,000RUB</td>
+						<td class="text-center align-middle p-2d-none d-md-table-cell">3个月-起140,000RUB<br>6个月-起270,000RUB<br>12个月-起530,000RUB</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">3.4</td>
@@ -4607,7 +4601,7 @@ $out2.="</a>";
 					<tr>
 						<td class="text-center align-middle p-2">7</td>
 						<td class="text-center align-middle p-2">空缺位置</td>
-						<td class="text-center align-middle p-2">1000擦</td>
+						<td class="text-center align-middle p-2">1,000RUB</td>
 						<td class="text-left align-middle p-2">关税允许客户在空缺部分放置一个空缺一个月</td>
 						<td class="text-center align-middle p-2d-none d-md-table-cell">&nbsp;</td>
 					</tr>
@@ -4635,21 +4629,21 @@ $out2.="</a>";
 					<tr>
 						<td class="text-center align-middle p-2">11</td>
 						<td class="text-center align-middle p-2">Vip Club Gorny Mir会员资格</td>
-						<td class="text-center align-middle p-2">每年100,000RUB</td>
+						<td class="text-center align-middle p-2">起100,000RUB</td>
 						<td class="text-left align-middle p-2">此资费使客户能够参加Gorny Mir Club的会议。<br>客户进入俱乐部的数据库（独家提供矿山和原材料销售）</td>
 						<td class="text-center align-middle p-2d-none d-md-table-cell">&nbsp;</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">12</td>
 						<td class="text-center align-middle p-2">银卡</td>
-						<td class="text-center align-middle p-2">每年1,000,000RUB</td>
+						<td class="text-center align-middle p-2">起1,000,000RUB</td>
 						<td class="text-left align-middle p-2">VIP俱乐部Gorny Mir的1年会员资格。<br>此关税具有以下优点：<br>-在主题部分（设备，服务，原材料等）放置多达10（十）个广告。）;<br>-广告横幅放置（+放置商品和服务目录的链接+附上设备演示）。<br>此关税包括：<br>-个人经理服务;<br>-新闻部分的一篇文章。<br>此资费提供了访问门户数据库（包括隐藏的详细信息）</td>
 						<td class="text-center align-middle p-2d-none d-md-table-cell">&nbsp;</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">13</td>
 						<td class="text-center align-middle p-2">金卡</td>
-						<td class="text-center align-middle p-2">每年5,000,000RUB</td>
+						<td class="text-center align-middle p-2">起5,000,000RUB</td>
 						<td class="text-left align-middle p-2">VIP俱乐部Gorny Mir的1年会员资格。<br>此关税具有以下优点：<br>-在主题部分（设备，服务，原材料等）放置多达50（五十）个广告。）;<br>-广告横幅放置（+放置商品和服务目录的链接+附加设备<br></td>
 						<td class="text-center align-middle p-2d-none d-md-table-cell">&nbsp;</td>
 					</tr>
@@ -5112,69 +5106,71 @@ $out2.="</a>";
 <p style="text-align: center; margin-bottom: 0cm;"><b>ТАРИФЫ</b></p>
 <p style="margin-bottom: 0cm"><br>
 </p>
-<p style="margin-bottom: 0cm" align="center"><br>
+<p style="margin-bottom: 0cm" align="center"><br>Стоимость размещения информации на портале указана для резидентов РФ.
+<br>Для нерезидентов цена размещения определяется по договоренности.
+</p><p style="margin-bottom: 0cm"><br>
 </p>
 				<table class="table table-bordered">
 					<tr>
 						<th class="fw-bold col-1 col-md-1 text-center">№</th>
 						<th class="fw-bold col-2 col-md-2 text-center">Статус</th>
-						<th class="fw-bold col-2 col-md-2 text-center">Стоимость</th>
+						<th class="fw-bold col-2 col-md-2 text-center">Стоимость (для резидентов РФ)</th>
 						<th class="fw-bold col-4 col-md-4 text-center">Функции</th>
 						<th class="fw-bold col-3 col-md-3 text-center d-none d-md-table-cell">Примечания</th>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">1</td>
 						<td class="text-center align-middle p-2">Тариф Стандарт</td>
-						<td class="text-center align-middle p-2">5 тыс. руб.<br>(при оплате более трех объявлений стоимость 4,5 тыс. руб., более пяти 4 тыс. руб.)</td>
+						<td class="text-center align-middle p-2">от 5 тыс. руб.</td>
 						<td class="text-left align-middle p-2">Позволяет обладателю размещать на месяц в соответствующем подразделе одно информационное объявление (наименование оборудования, услуг, сырья и т.д. кроме вакансий).</td>
-						<td class="text-center align-middle p-2 d-none d-md-table-cell">3 мес. – 12 тыс. руб.<br>6 мес. – 22 тыс. руб.<br>1год – 40 тыс. руб.</td>
+						<td class="text-center align-middle p-2 d-none d-md-table-cell">&nbsp;</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">2</td>
 						<td class="text-center align-middle p-2">Тариф Стандарт плюс</td>
-						<td class="text-center align-middle p-2">7 тыс. руб.<br>(при оплате более трех объявлений стоимость 6,5 тыс. руб., более пяти 6 тыс. руб.)</td>
+						<td class="text-center align-middle p-2">от 7 тыс. руб.</td>
 						<td class="text-left align-middle p-2">Позволяет обладателю размещать на портале в соответствующем разделе одно информационное объявление в месяц (наименование оборудования, услуг, сырья и т.д. кроме вакансий), прикрепить поясняющее фото или демо-ролик своего объявления в течении одного месяца.</td>
-						<td class="text-center align-middle p-2 d-none d-md-table-cell">3 мес. – 18 тыс. руб.<br>6 мес. – 34 тыс. руб.<br>1год – 65 тыс. руб.</td>
+						<td class="text-center align-middle p-2 d-none d-md-table-cell">&nbsp;</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">3</td>
 						<td class="text-center align-middle p-2">Размещение баннера</td>
 						<td class="text-center align-middle p-2">Согласно классности</td>
-						<td class="text-left align-middle p-2">Позволяет разместить на месяц свой тематический рекламный баннер.<br>1100х100 — для ПК-версии;<br>409х100 — для моб. версии</td>
-						<td class="text-center align-middle p-2 d-none d-md-table-cell"><b>Рекламодатель несёт полную ответственность за достоверность сведений, размещенных на рекламных баннерах.</b></td>
+						<td class="text-left align-middle p-2">Позволяет разместить на месяц свой тематический рекламный баннер.<br>1600х300 — для ПК-версии;<br>320х140 — для моб. версии</td>
+						<td class="text-center align-middle p-2 d-none d-md-table-cell">Рекламодатель несёт полную ответственность за достоверность сведений, размещенных на рекламных баннерах.</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">3.1</td>
 						<td class="text-center align-middle p-2">Размещение баннера Класс А</td>
-						<td class="text-center align-middle p-2">150 тыс. руб.</td>
+						<td class="text-center align-middle p-2">от 150 тыс. руб. (на один месяц)</td>
 						<td class="text-left align-middle p-2">на главной (первой) странице</td>
-						<td class="text-center align-middle p-2 d-none d-md-table-cell">3 мес. – 400 тыс. руб.<br>6 мес. – 750 тыс. руб.<br>1год – 1400 тыс. руб.</td>
+						<td class="text-center align-middle p-2 d-none d-md-table-cell">3 мес. – от 400 тыс. руб.<br>6 мес. – от 750 тыс. руб.<br>1год – от 1400 тыс. руб.</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">3.2</td>
 						<td class="text-center align-middle p-2">Размещение баннера Класс B</td>
-						<td class="text-center align-middle p-2">100 тыс. руб.</td>
+						<td class="text-center align-middle p-2">от 100 тыс. руб.(на один месяц)</td>
 						<td class="text-left align-middle p-2">в тематическом разделе<br>(например, «Оборудование»)</td>
-						<td class="text-center align-middle p-2 d-none d-md-table-cell">3 мес. – 250 тыс. руб.<br>6 мес. – 450 тыс. руб.<br>1год – 850 тыс. руб.</td>
+						<td class="text-center align-middle p-2 d-none d-md-table-cell">3 мес. – от 250 тыс. руб.<br>6 мес. – от 450 тыс. руб.<br>1год – от 850 тыс. руб.</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">3.3</td>
 						<td class="text-center align-middle p-2">Размещение баннера Класс C</td>
-						<td class="text-center align-middle p-2">50 тыс. руб.</td>
+						<td class="text-center align-middle p-2">от 50 тыс. руб.(на один месяц)</td>
 						<td class="text-left align-middle p-2">в тематическом подразделе<br>(например, «Карьерная техника»)</td>
-						<td class="text-center align-middle p-2 d-none d-md-table-cell">3 мес. – 140 тыс. руб.<br>6 мес. – 270 тыс. руб.<br>1год – 530 тыс. руб.</td>
+						<td class="text-center align-middle p-2 d-none d-md-table-cell">3 мес. – от 140 тыс. руб.<br>6 мес. – от 270 тыс. руб.<br>1год – от 530 тыс. руб.</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">3.4</td>
 						<td class="text-center align-middle p-2">Изготовление баннера</td>
 						<td class="text-center align-middle p-2">от 10 тыс. руб.</td>
 						<td class="text-left align-middle p-2">по материалам заказчика</td>
-						<td class="text-center align-middle p-2 d-none d-md-table-cell"></td>
+						<td class="text-center align-middle p-2 d-none d-md-table-cell">&nbsp;</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">4</td>
 						<td class="text-center align-middle p-2">Размещение статьи</td>
-						<td class="text-center align-middle p-2">50 тыс. руб.</td>
+						<td class="text-center align-middle p-2">от 50 тыс. руб.</td>
 						<td class="text-left align-middle p-2">Позволяет разместить тематическую статью в разделе новостей.<br>До 5000 символов — на сайт; до 2000 символов — в Телеграм.</td>
 						<td class="text-center align-middle p-2 d-none d-md-table-cell">&nbsp;</td>
 					</tr>
@@ -5223,21 +5219,21 @@ $out2.="</a>";
 					<tr>
 						<td class="text-center align-middle p-2">11</td>
 						<td class="text-center align-middle p-2">Абонемент на членство в VIP клубе «Горный Мир»</td>
-						<td class="text-center align-middle p-2">100 тыс. руб. на год.</td>
+						<td class="text-center align-middle p-2">от 100 тыс. руб. на год.</td>
 						<td class="text-left align-middle p-2">Дает право участвовать в заседаниях клуба «Горный Мир».<br>Дает право на получение информации рассчитанной только для членов клуба (эксклюзивные предложения о продаже месторождений и сырья).</td>
 						<td class="text-center align-middle p-2 d-none d-md-table-cell">&nbsp;</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">12</td>
 						<td class="text-center align-middle p-2">Серебряная карта</td>
-						<td class="text-center align-middle p-2">1 млн руб.</td>
+						<td class="text-center align-middle p-2">от 1 млн руб.</td>
 						<td class="text-left align-middle p-2">Автоматически получает членство в VIP клубе «Горный Мир» сроком на один год.<br>Позволяет обладателю в течении года:<br>-размещать на портале до 10 (десяти) тематических наименований (оборудования, услуг, вакансий, сырья и т.д.); <br>-имеет право разместить свой рекламный баннер (+разместить ссылку на свой каталог (продукции/услуг), +прикрепить демо-ролик своего оборудования).<br>Дает право:<br>-обслуживание персональным менеджером;<br>-размещение одной статьи в разделе новостей.<br>Также позволяет просматривать всю информацию (включая скрытые реквизиты), имеющуюся на портале в течении года.</td>
 						<td class="text-center align-middle p-2 d-none d-md-table-cell">&nbsp;</td>
 					</tr>
 					<tr>
 						<td class="text-center align-middle p-2">13</td>
 						<td class="text-center align-middle p-2">Золотая карта</td>
-						<td class="text-center align-middle p-2">5 млн руб.</td>
+						<td class="text-center align-middle p-2">от 5 млн руб.</td>
 						<td class="text-left align-middle p-2">Автоматически получает членство в VIP клубе «Горный Мир» сроком на один год.<br>Позволяет обладателю в течении года:<br>-размещать на портале до 50 (пятидесяти) тематических наименований (оборудования, услуг, вакансий, сырья и т.д.); <br>-имеет право разместить свой рекламный баннер (+разместить ссылку на свой каталог (продукции/услуг), +прикрепить демо-ролик своего оборудования).<br>Дает право:<br>-обслуживание персональным менеджером;<br>-размещение пяти статей в разделе новостей (одна в квартал + годовая);<br>- ежеквартальную персональную рекламную рассылку по базе данных портала.<br>Также позволяет просматривать всю информацию (включая скрытые реквизиты), имеющуюся на портале в течении года.<br></td>
 						<td class="text-center align-middle p-2 d-none d-md-table-cell">&nbsp;</td>
 					</tr>
