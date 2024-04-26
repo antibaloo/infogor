@@ -2041,7 +2041,7 @@ if ($mod=="catalog") {
       </nav>
     </header>
     <!-- Новое слайд-шоу -->
-    <?php if ($mod == "" || $page['id'] ==3 || $page['parent'] == 3) { ?>
+    <?php if ($mod == "" || $page['id'] ==3 || $page['parent'] == 3 && $page['id'] !=68) { ?>
     <div class="slContainer">
       <div class="slResponsive">
     <?php

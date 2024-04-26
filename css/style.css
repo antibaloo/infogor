@@ -1259,7 +1259,7 @@ a.st:hover svg {
 /* Стили для нового слайдера */
 
 .slContainer {
-  margin: auto;
+  margin: 5px auto;
   padding-left: 45px;
   padding-right: 45px;
   width: 100%;
