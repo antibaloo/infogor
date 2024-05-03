@@ -1,26 +1,23 @@
-$(".slResponsive").slick({
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  centerMode: true,
-  centerPadding: "25%",
-  slidesToScroll: 1,
-  autoplay: true,
-  autoplaySpeed: 5000,
-  responsive: [
-    {
-      breakpoint: 1081,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        centerMode: false,
-      }
-    },
-
-  ]
-});
-
 $(document).ready(function () {
+  $(".slResponsive").slick({
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    centerMode: true,
+    centerPadding: "25%",
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1081,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          centerMode: false,
+        }
+      },
+    ]
+  });
+  $(".slContainer").show();
   // $(".dropdown").hover(function () {
   //   console.log($(this).find(".dropdown-toggle"));
   //   $(this).find(".dropdown-toggle")[0].trigger("click");
